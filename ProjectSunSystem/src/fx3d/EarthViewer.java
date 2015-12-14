@@ -42,7 +42,7 @@ public class EarthViewer extends Application {
 		sunMaterial.setDiffuseMap(new Image(SUN_MAP, sMAP_WIDTH, sMAP_HEIGHT, true, true));
 
 		sun.setMaterial(sunMaterial);
-
+		// asdasda
 		return sun;
 	}
 
