@@ -19,14 +19,17 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class EarthViewer extends Application {
+public class SunSystemViewer extends Application {
 
 	private static final double	sun_RADIUS		= 200;
 	private static final double	earth_RADIUS	= 100;
-	private static final double	um_RADIUSa		= 700;
+	private static final double	moon_RADIUS		= 35;
+	private static final double	um_RADIUSa		= 800;
 	private static final double	um_RADIUSb		= 550;
 	private static double		angle			= 0;
+	private static double		moonangle		= 0;
 	private static final double	step			= 0.007;
+	private static final double	moonstep		= 0.007;
 	private static final double	VIEWPORT_SIZEX	= 960;
 	private static final double	VIEWPORT_SIZEY	= 540;
 	private static final double	ROTATE_SECS		= 30;
@@ -38,10 +41,11 @@ public class EarthViewer extends Application {
 
 	private static final String	SUN_MAP			= "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
 	private static final String	EARTH_MAP		= "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
-	private static final String	MOON_MAP		= "http://vignette4.wikia.nocookie.net/crossing-jordan/images/1/14/Schwarz.png/revision/latest?cb=20100710033304&path-prefix=de";
+	private static final String	MOON_MAP		= "https://raw.githubusercontent.com/CoryG89/MoonDemo/master/img/maps/moon.jpg";
 
 	Point3D						earth			= new Point3D();
 	Point3D						sun				= new Point3D();
+	Point3D						moon			= new Point3D();
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -58,7 +62,7 @@ public class EarthViewer extends Application {
 	}
 
 	private Sphere buildMoonScene() {
-		Sphere sun = new Sphere(sun_RADIUS);
+		Sphere sun = new Sphere(moon_RADIUS);
 
 		sun.setTranslateX(VIEWPORT_SIZEX / 2d);
 		sun.setTranslateY(VIEWPORT_SIZEY / 2d);
@@ -89,7 +93,7 @@ public class EarthViewer extends Application {
 	public void start(Stage stage) {
 		sun.setAll(960 - sun_RADIUS, 540 - sun_RADIUS, 0);
 		GridPane g1 = new GridPane();
-		g1.getChildren().addAll(buildSunScene(), buildEarthScene());
+		g1.getChildren().addAll(buildSunScene(), buildEarthScene(), buildMoonScene());
 
 		g1.getChildren().get(0).setTranslateX(960 - sun_RADIUS);
 		g1.getChildren().get(0).setTranslateY(540 - sun_RADIUS);
@@ -98,7 +102,11 @@ public class EarthViewer extends Application {
 		scene.setFill(Color.rgb(0, 0, 0));
 
 		PerspectiveCamera camera = new PerspectiveCamera();
-		// camera.setTranslateZ(-1000);
+		camera.setTranslateZ(-800);
+		camera.setTranslateY(-1300);
+		camera.setTranslateX(0);
+		camera.setRotationAxis(Rotate.X_AXIS);
+		camera.setRotate(-45);
 		// camera.setNearClip(0.1);
 		// camera.setFarClip(200.0);
 		// camera.setFieldOfView(35);
@@ -111,13 +119,23 @@ public class EarthViewer extends Application {
 		tl.setCycleCount(Animation.INDEFINITE);
 		KeyFrame moveEarth = new KeyFrame(Duration.seconds(.0200), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+
 				earth.x = (int) (um_RADIUSa * Math.sin(angle)) + sun.x;
 				earth.z = (int) (um_RADIUSb * Math.cos(angle)) + sun.z;
 				g1.getChildren().get(1).setTranslateX(earth.x);
 				g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(1).setTranslateZ(earth.z);
+
+				moon.x = (int) (Math.cos(moonangle) * (earth.x / 2));
+				moon.z = (int) (Math.sin(moonangle) * (earth.z / 2));
+				g1.getChildren().get(2).setTranslateX(moon.x);
+				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
+				g1.getChildren().get(2).setTranslateZ(moon.z);
+
 				angle += step;
 				angle %= 360;
+				moonangle += moonstep;
+				moonangle %= 360;
 			}
 		});
 
