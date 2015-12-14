@@ -94,4 +94,6 @@ public class EllipticalOrbitExample extends JFrame {
 
 		Executors.newSingleThreadExecutor().execute(renderLoop);
 	}
+
+	// ich habe was verändert
 }
