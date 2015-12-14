@@ -2,13 +2,17 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class EllipticalOrbitExample extends JFrame {
@@ -30,8 +34,20 @@ public class EllipticalOrbitExample extends JFrame {
 												ovalPoint.y = 550;
 												earthPoint.x = 100;
 												earthPoint.y = 100;
+												Image sun = null;
+												try {
+													sun = ImageIO.read(new URL("http://i.imgur.com/85mYqQy.png")).getScaledInstance(sunPoint.x, sunPoint.y, BufferedImage.SCALE_SMOOTH);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
+												Image earth = null;
+												try {
+													earth = ImageIO.read(new URL("http://i.imgur.com/hvUE093.jpg")).getScaledInstance(earthPoint.x, earthPoint.y, BufferedImage.SCALE_SMOOTH);
+												} catch (Exception e) {
+													e.printStackTrace();
+												}
 												double angle = 0;
-												double step = 0.1;
+												double step = 0.02;
 												int radiusA = ovalPoint.x / 2;
 												int radiusB = ovalPoint.y / 2;
 												while (true) {
@@ -48,7 +64,7 @@ public class EllipticalOrbitExample extends JFrame {
 													g.clearRect(0, 0, getWidth(), getHeight());
 
 													g.setColor(Color.yellow);
-													g.fillOval((size.x / 2) - (sunPoint.x / 2), (size.y / 2) - (sunPoint.y / 2), sunPoint.x, sunPoint.y);
+													g.drawImage(sun, (center.x) - (sunPoint.x / 2), (center.y) - (sunPoint.y / 2), null);
 
 													g.setColor(Color.white);
 													((Graphics2D) g).setStroke(new BasicStroke(3));
@@ -57,7 +73,7 @@ public class EllipticalOrbitExample extends JFrame {
 													((Graphics2D) g).setStroke(new BasicStroke(1));
 
 													g.setColor(Color.blue);
-													g.fillOval(x - earthPoint.x / 2, y - earthPoint.y / 2, earthPoint.x, earthPoint.y);
+													g.drawImage(earth, x - earthPoint.x / 2, y - earthPoint.y / 2, null);
 
 													bufferStrategy.show();
 
@@ -88,12 +104,10 @@ public class EllipticalOrbitExample extends JFrame {
 		int y = (d.height - getSize().height) / 2;
 		setLocation(x, y);
 
-		createBufferStrategy(2);
+		createBufferStrategy(3);
 
 		this.bufferStrategy = getBufferStrategy();
 
 		Executors.newSingleThreadExecutor().execute(renderLoop);
 	}
-
-	// ich habe was verändert
 }
