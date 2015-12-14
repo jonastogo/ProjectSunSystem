@@ -29,7 +29,7 @@ public class SunSystemViewer extends Application {
 	private static double		angle			= 0;
 	private static double		moonangle		= 0;
 	private static final double	step			= 0.007;
-	private static final double	moonstep		= 0.007;
+	private static final double	moonstep		= 0.014;
 	private static final double	VIEWPORT_SIZEX	= 960;
 	private static final double	VIEWPORT_SIZEY	= 540;
 	private static final double	ROTATE_SECS		= 30;
@@ -102,11 +102,11 @@ public class SunSystemViewer extends Application {
 		scene.setFill(Color.rgb(0, 0, 0));
 
 		PerspectiveCamera camera = new PerspectiveCamera();
-		camera.setTranslateZ(-800);
-		camera.setTranslateY(-1300);
+		camera.setTranslateZ(540);
+		camera.setTranslateY(-500);
 		camera.setTranslateX(0);
 		camera.setRotationAxis(Rotate.X_AXIS);
-		camera.setRotate(-45);
+		camera.setRotate(-90);
 		// camera.setNearClip(0.1);
 		// camera.setFarClip(200.0);
 		// camera.setFieldOfView(35);
@@ -126,9 +126,9 @@ public class SunSystemViewer extends Application {
 				g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(1).setTranslateZ(earth.z);
 
-				moon.x = (int) (Math.cos(moonangle) * (earth.x / 2));
-				moon.z = (int) (Math.sin(moonangle) * (earth.z / 2));
-				g1.getChildren().get(2).setTranslateX(moon.x);
+				moon.x = (int) (Math.sin(moonangle) * (earth_RADIUS + 100) + (earth.x));
+				moon.z = (int) (Math.cos(moonangle) * (earth_RADIUS + 100) + (earth.z));
+				g1.getChildren().get(2).setTranslateX(moon.x + earth_RADIUS / 2);
 				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(2).setTranslateZ(moon.z);
 
