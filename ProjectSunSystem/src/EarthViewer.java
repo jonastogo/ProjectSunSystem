@@ -1,5 +1,6 @@
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TimelineBuilder;
@@ -14,6 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.ArcTo;
+import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.PathBuilder;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -21,27 +28,27 @@ import javafx.util.Duration;
 
 public class EarthViewer extends Application {
 
-	private static final double	sun_RADIUS		= 200;
-	private static final double	earth_RADIUS	= 100;
-	private static final double	um_RADIUSa		= 700;
-	private static final double	um_RADIUSb		= 550;
-	private static double		angle			= 0;
-	private static final double	step			= 0.01;
-	private static final double	VIEWPORT_SIZEX	= 960;
-	private static final double	VIEWPORT_SIZEY	= 540;
-	private static final double	ROTATE_SECS		= 30;
+	private static final double sun_RADIUS = 200;
+	private static final double earth_RADIUS = 100;
+	private static final double um_RADIUSa = 700;
+	private static final double um_RADIUSb = 550;
+	private static double angle = 0;
+	private static final double step = 0.01;
+	private static final double VIEWPORT_SIZEX = 960;
+	private static final double VIEWPORT_SIZEY = 540;
+	private static final double ROTATE_SECS = 30;
 
-	private static final double	sMAP_WIDTH		= 3000 / 2d;
-	private static final double	sMAP_HEIGHT		= 1500 / 2d;
-	private static final double	eMAP_WIDTH		= 8192 / 2d;
-	private static final double	eMAP_HEIGHT		= 4096 / 2d;
+	private static final double sMAP_WIDTH = 3000 / 2d;
+	private static final double sMAP_HEIGHT = 1500 / 2d;
+	private static final double eMAP_WIDTH = 8192 / 2d;
+	private static final double eMAP_HEIGHT = 4096 / 2d;
 
-	private static final String	SUN_MAP			= "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
-	private static final String	EARTH_MAP		= "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
-	private static final String	MOON_MAP		= "http://vignette4.wikia.nocookie.net/crossing-jordan/images/1/14/Schwarz.png/revision/latest?cb=20100710033304&path-prefix=de";
+	private static final String SUN_MAP = "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
+	private static final String EARTH_MAP = "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
+	private static final String MOON_MAP = "http://vignette4.wikia.nocookie.net/crossing-jordan/images/1/14/Schwarz.png/revision/latest?cb=20100710033304&path-prefix=de";
 
-	Point3D						earth			= new Point3D();
-	Point3D						sun				= new Point3D();
+	Point3D earth = new Point3D();
+	Point3D sun = new Point3D();
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -94,30 +101,25 @@ public class EarthViewer extends Application {
 		g1.getChildren().get(0).setTranslateX(960 - sun_RADIUS);
 		g1.getChildren().get(0).setTranslateY(540 - sun_RADIUS);
 
-		for (int i = 0; i < 36000; i++) {
-			earth.x = (int) (um_RADIUSa * Math.sin(angle)) + sun.x;
-			earth.z = (int) (um_RADIUSb * Math.cos(angle)) + sun.z;
-			g1.getChildren().get(1).setTranslateX(earth.x);
-			g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
-			g1.getChildren().get(1).setTranslateZ(earth.z);
-			angle += step;
-			angle %= 360;
-		}
-		Timeline timeline = TimelineBuilder.create().keyFrames(new KeyFrame(new Duration(10), new EventHandler<ActionEvent>() {
-			public void handle(javafx.event.ActionEvent t) {
-				for (int i = 0; i < 36000; i++) {
-					earth.x = (int) (um_RADIUSa * Math.sin(angle)) + sun.x;
-					earth.z = (int) (um_RADIUSb * Math.cos(angle)) + sun.z;
-					g1.getChildren().get(1).setTranslateX(earth.x);
-					g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
-					g1.getChildren().get(1).setTranslateZ(earth.z);
-					angle += step;
-					angle %= 360;
-				}
-			}
-		})).cycleCount(Timeline.INDEFINITE).build();
+		// for (int i = 0; i < 36000; i++) {
+		// earth.x = (int) (um_RADIUSa * Math.sin(angle)) + sun.x;
+		// earth.z = (int) (um_RADIUSb * Math.cos(angle)) + sun.z;
+		// g1.getChildren().get(1).setTranslateX(earth.x);
+		// g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
+		// g1.getChildren().get(1).setTranslateZ(earth.z);
+		// angle += step;
+		// angle %= 360;
+		// }
 
-		timeline.setCycleCount(Timeline.INDEFINITE);
+		Path path = createEllipsePath(sun.x, sun.z, um_RADIUSa, um_RADIUSb, 360);
+		PathTransition pathTransition = new PathTransition();
+		pathTransition.setDuration(Duration.millis(4000));
+		pathTransition.setPath(path);
+		pathTransition.setNode(g1.getChildren().get(1));
+		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+		pathTransition.setCycleCount(Timeline.INDEFINITE);
+		pathTransition.setAutoReverse(true);
+		pathTransition.play();
 
 		Scene scene = new Scene(g1, VIEWPORT_SIZEX, VIEWPORT_SIZEY, true, SceneAntialiasing.BALANCED);
 
@@ -128,12 +130,53 @@ public class EarthViewer extends Application {
 		stage.setScene(scene);
 		stage.show();
 		stage.setFullScreen(true);
+
 		rotateAroundYAxis(g1.getChildren().get(0)).play();
 		rotateAroundYAxis(g1.getChildren().get(1)).play();
 
-		timeline.play();
-
 	}
+
+	private Path createEllipsePath(double centerX, double centerY, double radiusX, double radiusY, double rotate) {
+		ArcTo arcTo = new ArcTo();
+		arcTo.setX(centerX - radiusX + 1); // to simulate a full 360 degree
+											// celcius circle.
+		arcTo.setY(centerY - radiusY);
+		arcTo.setSweepFlag(false);
+		arcTo.setLargeArcFlag(true);
+		arcTo.setRadiusX(radiusX);
+		arcTo.setRadiusY(radiusY);
+		arcTo.setXAxisRotation(rotate);
+
+		Path path = PathBuilder.create()
+				.elements(new MoveTo(centerX - radiusX, centerY - radiusY), arcTo, new ClosePath()) // close
+																									// 1
+																									// px
+																									// gap.
+				.build();
+		path.setStroke(Color.DODGERBLUE);
+		path.getStrokeDashArray().setAll(5d, 5d);
+		return path;
+	}
+
+	//
+	// Timeline timeline = TimelineBuilder.create().keyFrames(new KeyFrame(new
+	// Duration(10), new EventHandler<ActionEvent>() {
+	// public void handle(javafx.event.ActionEvent t) {
+	// for (int i = 0; i < 36000; i++) {
+	// earth.x = (int) (um_RADIUSa * Math.sin(angle)) + sun.x;
+	// earth.z = (int) (um_RADIUSb * Math.cos(angle)) + sun.z;
+	// g1.getChildren().get(1).setTranslateX(earth.x);
+	// g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
+	// g1.getChildren().get(1).setTranslateZ(earth.z);
+	// angle += step;
+	// angle %= 360;
+	// }
+	// }
+	// })).cycleCount(Timeline.INDEFINITE).build();
+	//
+	// timeline.setCycleCount(Timeline.INDEFINITE);
+
+	
 
 	private RotateTransition rotateAroundYAxis(Node node) {
 		RotateTransition rotate = new RotateTransition(Duration.seconds(ROTATE_SECS), node);
