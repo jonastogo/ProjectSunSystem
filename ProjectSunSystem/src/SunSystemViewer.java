@@ -11,24 +11,26 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SunSystemViewer extends Application {
 
-	private static final double	sun_RADIUS			= 400;
+	private static final double	sun_RADIUS			= 600;
 	private static final double	Merkur_RADIUS		= 24;
 	private static final double	Venus_RADIUS		= 60;
 	private static final double	earth_RADIUS		= 100;
 	private static final double	moon_RADIUS			= 10;
 	private static final double	Mars_RADIUS			= 33;
-	private static final double	Jupiter_RADIUS		= 300;
-	private static final double	Saturn_RADIUS		= 400;
+	private static final double	Jupiter_RADIUS		= 400;
+	private static final double	Saturn_RADIUS		= 300;
 	private static final double	Uranus_RADIUS		= 250;
 	private static final double	Neptun_RADIUS		= 240;
 
@@ -48,40 +50,40 @@ public class SunSystemViewer extends Application {
 	private static final double	um_Uranus_RADIUSb	= 5357;
 	private static final double	um_Neptun_RADIUSa	= 8900;
 	private static final double	um_Neptun_RADIUSb	= 6357;
-	
-	private static double		Merkurangle			= 0;
-	private static double		Venusangle			= 0;
-	private static double		Earthangle			= 0;
-	private static double		Moonangle			= 0;
-	private static double		Marsangle			= 0;
-	private static double		Jupiterangle		= 0;
-	private static double		Saturnangle			= 0;
-	private static double		Uranusangle			= 0;
-	private static double		Neptunangle			= 0;
-		
-	private static final double	Merkurstep		= 0.007;
-	private static final double	Venusstep		= 0.007;
-	private static final double	Earthstep		= 0.007;
-	private static final double	Moonstep		= 0.014;
-	private static final double	Marsstep		= 0.007;
-	private static final double	Jupiterstep		= 0.007;
-	private static final double	Saturnstep		= 0.007;
-	private static final double	Uranusstep		= 0.007;
-	private static final double	Neptunstep		= 0.007;	
-	
-	private static final double	VIEWPORT_SIZEX			= 960;
-	private static final double	VIEWPORT_SIZEY			= 540;
-	
-	private static final double	sunROTATE_MSECS			= 30;
-	private static final double	MerkurROTATE_MSECS		= 30;
-	private static final double	VenusROTATE_MSECS		= 30;
-	private static final double	EarthROTATE_MSECS		= 30;
-	private static final double	MoonROTATE_MSECS		= 30;
-	private static final double	MarsROTATE_MSECS		= 30;
-	private static final double	JupiterROTATE_MSECS		= 30;
-	private static final double	SaturnROTATE_MSECS		= 30;
-	private static final double	UranusROTATE_MSECS		= 30;
-	private static final double	NeptunROTATE_MSECS		= 30;
+
+	private static double		Merkurangle			= -180;
+	private static double		Venusangle			= 90;
+	private static double		Earthangle			= -90;
+	private static double		Moonangle			= 45;
+	private static double		Marsangle			= -45;
+	private static double		Jupiterangle		= 320;
+	private static double		Saturnangle			= 280;
+	private static double		Uranusangle			= 240;
+	private static double		Neptunangle			= 200;
+
+	private static final double	Merkurstep			= 0.1;
+	private static final double	Venusstep			= 0.0391493584808256;
+	private static final double	Earthstep			= 0.0240842039555818;
+	private static final double	Moonstep			= 0.0321974840511388;
+	private static final double	Marsstep			= 0.0128051762787854;
+	private static final double	Jupiterstep			= 0.0020302962322887;
+	private static final double	Saturnstep			= 0.0008176054572965;
+	private static final double	Uranusstep			= 0.0002866791724367;
+	private static final double	Neptunstep			= 0.0001461508826724;
+
+	private static final double	VIEWPORT_SIZEX		= 960;
+	private static final double	VIEWPORT_SIZEY		= 540;
+
+	private static final double	sunROTATE_MSECS		= 30;
+	private static final double	MerkurROTATE_MSECS	= 0.009291249;
+	private static final double	VenusROTATE_MSECS	= 0.002357957;
+	private static final double	EarthROTATE_MSECS	= 0.0608021041;
+	private static final double	MoonROTATE_MSECS	= 3;
+	private static final double	MarsROTATE_MSECS	= 0.598634604;
+	private static final double	JupiterROTATE_MSECS	= 2.609798749;
+	private static final double	SaturnROTATE_MSECS	= 2.172901589;
+	private static final double	UranusROTATE_MSECS	= 2.609798749;
+	private static final double	NeptunROTATE_MSECS	= 2.609798749;
 
 	private static final double	sunMAP_WIDTH		= 3000 / 2d;
 	private static final double	sunMAP_HEIGHT		= 1500 / 2d;
@@ -99,34 +101,36 @@ public class SunSystemViewer extends Application {
 	private static final double	JupiterMAP_HEIGHT	= 2048 / 2d;
 	private static final double	SaturnMAP_WIDTH		= 1800 / 2d;
 	private static final double	SaturnMAP_HEIGHT	= 900 / 2d;
-	private static final double	UranusMAP_WIDTH		= 4000/ 2d;
+	private static final double	UranusMAP_WIDTH		= 4000 / 2d;
 	private static final double	UranusMAP_HEIGHT	= 2000 / 2d;
 	private static final double	NeptunMAP_WIDTH		= 720 / 2d;
 	private static final double	NeptunMAP_HEIGHT	= 360 / 2d;
-	
 
-	private static final String	SUN_MAP			= "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
-	private static final String	Merkur_MAP		= "http://www.pur3d.de/images/design_pur3d/upload/space33.jpg";
-	private static final String	Venus_MAP		= "http://laps.noaa.gov/albers/sos/venus/venus4/venus4_rgb_cyl_www.jpg";
-	private static final String	EARTH_MAP		= "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
-	private static final String	MOON_MAP		= "http://www.uni-weimar.de/architektur/dsmbfl/blog/alotta/user/home/img/000/000//452.jpg";
-	private static final String	Mars_MAP		= "http://sos.noaa.gov/ge/astronomy/mars/textures/m46_color_8k.jpg";
-	private static final String	Jupiter_MAP		= "http://laps.noaa.gov/albers/sos/jupiter/jupiter/jupiter_rgb_cyl_www.jpg";
-	private static final String	Saturn_MAP		= "http://webuser.hs-furtwangen.de/~kieferaa/grundstudium/Computergrafik/CG/planets/planets/tex/saturnmap.jpg";
-	private static final String	Uranus_MAP		= "http://orig03.deviantart.net/a155/f/2010/235/d/1/blue_gas_giant_texture_by_avmorgan.jpg";
-	private static final String	Neptun_MAP		= "http://csdrive.srru.ac.th/55122420111/texture/neptun.jpg";
+	private static final String	SUN_MAP				= "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
+	private static final String	Merkur_MAP			= "http://www.pur3d.de/images/design_pur3d/upload/space33.jpg";
+	private static final String	Venus_MAP			= "http://laps.noaa.gov/albers/sos/venus/venus4/venus4_rgb_cyl_www.jpg";
+	private static final String	EARTH_MAP			= "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
+	private static final String	MOON_MAP			= "http://www.uni-weimar.de/architektur/dsmbfl/blog/alotta/user/home/img/000/000//452.jpg";
+	private static final String	Mars_MAP			= "http://sos.noaa.gov/ge/astronomy/mars/textures/m46_color_8k.jpg";
+	private static final String	Jupiter_MAP			= "http://laps.noaa.gov/albers/sos/jupiter/jupiter/jupiter_rgb_cyl_www.jpg";
+	private static final String	Saturn_MAP			= "http://webuser.hs-furtwangen.de/~kieferaa/grundstudium/Computergrafik/CG/planets/planets/tex/saturnmap.jpg";
+	private static final String	Uranus_MAP			= "http://orig03.deviantart.net/a155/f/2010/235/d/1/blue_gas_giant_texture_by_avmorgan.jpg";
+	private static final String	Neptun_MAP			= "http://csdrive.srru.ac.th/55122420111/texture/neptun.jpg";
 
-	Point3D						sun				= new Point3D();
-	Point3D						Merkur			= new Point3D();
-	Point3D						Venus			= new Point3D();
-	Point3D						earth			= new Point3D();
-	Point3D						moon			= new Point3D();
-	Point3D						Mars			= new Point3D();
-	Point3D						Jupiter			= new Point3D();
-	Point3D						Saturn			= new Point3D();
-	Point3D						Uranus			= new Point3D();
-	Point3D						Neptun			= new Point3D();
-	
+	Point3D						sun					= new Point3D();
+	Point3D						Merkur				= new Point3D();
+	Point3D						Venus				= new Point3D();
+	Point3D						earth				= new Point3D();
+	Point3D						moon				= new Point3D();
+	Point3D						Mars				= new Point3D();
+	Point3D						Jupiter				= new Point3D();
+	Point3D						Saturn				= new Point3D();
+	Point3D						Uranus				= new Point3D();
+	Point3D						Neptun				= new Point3D();
+
+	int							x, y, z;
+	private Rotate				rotateX, rotateY, rotateZ;
+	private Translate			translateX;
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -141,7 +145,7 @@ public class SunSystemViewer extends Application {
 
 		return sun;
 	}
-	
+
 	private Sphere buildMerkurScene() {
 		Sphere Merkur = new Sphere(Merkur_RADIUS);
 
@@ -149,13 +153,13 @@ public class SunSystemViewer extends Application {
 		Merkur.setTranslateY(VIEWPORT_SIZEY / 2d);
 
 		PhongMaterial MerkurMaterial = new PhongMaterial();
-		MerkurMaterial.setDiffuseMap(new Image(SUN_MAP, MerkurMAP_WIDTH, MerkurMAP_HEIGHT, true, true));
+		MerkurMaterial.setDiffuseMap(new Image(Merkur_MAP, MerkurMAP_WIDTH, MerkurMAP_HEIGHT, true, true));
 
 		Merkur.setMaterial(MerkurMaterial);
 
 		return Merkur;
 	}
-	
+
 	private Sphere buildVenusScene() {
 		Sphere Venus = new Sphere(Venus_RADIUS);
 
@@ -163,13 +167,13 @@ public class SunSystemViewer extends Application {
 		Venus.setTranslateY(VIEWPORT_SIZEY / 2d);
 
 		PhongMaterial VenusMaterial = new PhongMaterial();
-		VenusMaterial.setDiffuseMap(new Image(SUN_MAP, VenusMAP_WIDTH, VenusMAP_HEIGHT, true, true));
+		VenusMaterial.setDiffuseMap(new Image(Venus_MAP, VenusMAP_WIDTH, VenusMAP_HEIGHT, true, true));
 
 		Venus.setMaterial(VenusMaterial);
 
 		return Venus;
 	}
-	
+
 	private Sphere buildEarthScene() {
 		Sphere earth = new Sphere(earth_RADIUS);
 
@@ -183,6 +187,7 @@ public class SunSystemViewer extends Application {
 
 		return earth;
 	}
+
 	private Sphere buildMoonScene() {
 		Sphere moon = new Sphere(moon_RADIUS);
 
@@ -196,7 +201,7 @@ public class SunSystemViewer extends Application {
 
 		return moon;
 	}
-	
+
 	private Sphere buildMarsScene() {
 		Sphere Mars = new Sphere(Mars_RADIUS);
 
@@ -210,7 +215,7 @@ public class SunSystemViewer extends Application {
 
 		return Mars;
 	}
-	
+
 	private Sphere buildJupiterScene() {
 		Sphere Jupiter = new Sphere(Jupiter_RADIUS);
 
@@ -224,7 +229,7 @@ public class SunSystemViewer extends Application {
 
 		return Jupiter;
 	}
-	
+
 	private Sphere buildSaturnScene() {
 		Sphere Saturn = new Sphere(Saturn_RADIUS);
 
@@ -238,7 +243,7 @@ public class SunSystemViewer extends Application {
 
 		return Saturn;
 	}
-	
+
 	private Sphere buildUranusScene() {
 		Sphere Uranus = new Sphere(Uranus_RADIUS);
 
@@ -252,7 +257,7 @@ public class SunSystemViewer extends Application {
 
 		return Uranus;
 	}
-	
+
 	private Sphere buildNeptunScene() {
 		Sphere Neptun = new Sphere(Neptun_RADIUS);
 
@@ -266,11 +271,12 @@ public class SunSystemViewer extends Application {
 
 		return Neptun;
 	}
+
 	@Override
 	public void start(Stage stage) {
 		sun.setAll(960 - sun_RADIUS, 540 - sun_RADIUS, 0);
 		GridPane g1 = new GridPane();
-		g1.getChildren().addAll(buildSunScene(),buildMerkurScene(),buildEarthScene(), buildMoonScene(),buildMarsScene(),buildJupiterScene(),buildSaturnScene(),buildUranusScene(),buildNeptunScene());
+		g1.getChildren().addAll(buildSunScene(), buildMerkurScene(), buildVenusScene(), buildEarthScene(), buildMoonScene(), buildMarsScene(), buildJupiterScene(), buildSaturnScene(), buildUranusScene(), buildNeptunScene());
 
 		g1.getChildren().get(0).setTranslateX(960 - sun_RADIUS);
 		g1.getChildren().get(0).setTranslateY(540 - sun_RADIUS);
@@ -279,83 +285,149 @@ public class SunSystemViewer extends Application {
 		scene.setFill(Color.rgb(0, 0, 0));
 
 		PerspectiveCamera camera = new PerspectiveCamera();
-		camera.setTranslateZ(300);
-		camera.setTranslateY(-14000);
-		camera.setTranslateX(0);
+		camera.setTranslateX(960 - sun_RADIUS);
+		camera.setTranslateY(-16000);
+		camera.setTranslateZ(0);
 		camera.setRotationAxis(Rotate.X_AXIS);
 		camera.setRotate(-90);
-		// camera.setNearClip(0.1);
-		// camera.setFarClip(200.0);
-		// camera.setFieldOfView(35);
+
 		scene.setCamera(camera);
 		stage.setScene(scene);
 		stage.show();
-		stage.setFullScreen(true);
+		stage.setFullScreen(false);
+
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent keyEvent) {
+				System.out.println(keyEvent.getCode());
+				switch (keyEvent.getCode()) {
+					case A:
+						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(1, Rotate.Z_AXIS));
+						z += rotateZ.getAngle();
+						break;
+					case D:
+						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(-1, Rotate.Z_AXIS));
+						z += rotateZ.getAngle();
+						break;
+					case W:
+						camera.getTransforms().addAll(rotateX = new Rotate(1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+						x += rotateX.getAngle();
+						break;
+					case S:
+						camera.getTransforms().addAll(rotateX = new Rotate(-1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+						x += rotateX.getAngle();
+						break;
+					case Q:
+						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+						y += rotateY.getAngle();
+						break;
+					case E:
+						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(-1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+						y += rotateY.getAngle();
+						break;
+					case NUMPAD8:
+						System.out.println("+100");
+						camera.setTranslateY(camera.getTranslateY() + 100);
+						break;
+					case NUMPAD2:
+						System.out.println("-100");
+						camera.setTranslateY(camera.getTranslateY() - 100);
+						break;
+					case NUMPAD4:
+						System.out.println(camera.getTranslateX());
+						camera.setTranslateX(camera.getTranslateX() + 100);
+						break;
+					case NUMPAD6:
+						System.out.println(camera.getTranslateX());
+						camera.setTranslateX(camera.getTranslateX() - 100);
+						break;
+					case NUMPAD9:
+						System.out.println(camera.getTranslateX());
+						camera.setTranslateZ(camera.getTranslateZ() + 100);
+						break;
+					case NUMPAD1:
+						System.out.println(camera.getTranslateX());
+						camera.setTranslateZ(camera.getTranslateZ() - 100);
+						break;
+					case R:
+						camera.setTranslateX(960 - sun_RADIUS);
+						camera.setTranslateY(-16000);
+						camera.setTranslateZ(0);
+						camera.getTransforms().addAll(rotateX = new Rotate((x * (-1)), Rotate.X_AXIS), rotateY = new Rotate((y * (-1)), Rotate.Y_AXIS), rotateZ = new Rotate((z * (-1)), Rotate.Z_AXIS));
+						x = 0;
+						y = 0;
+						z = 0;
+						break;
+					default:
+						System.out.println("klappt nicht");
+						break;
+				}
+			}
+		});
 
 		Timeline tl = new Timeline();
 		tl.setCycleCount(Animation.INDEFINITE);
 		KeyFrame moveEarth = new KeyFrame(Duration.seconds(.0200), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 
-				Merkur.x = (int) ((um_Merkur_RADIUSa+sun_RADIUS) * Math.sin(Merkurangle)) + sun.x;
-				Merkur.z = (int) ((um_Merkur_RADIUSb+sun_RADIUS) * Math.cos(Merkurangle)) + sun.z;
-				g1.getChildren().get(1).setTranslateX(Merkur.x);
+				Merkur.x = (um_Merkur_RADIUSa + sun_RADIUS) * Math.sin(Merkurangle) + sun.x;
+				Merkur.z = (um_Merkur_RADIUSb + sun_RADIUS) * Math.cos(Merkurangle) + sun.z;
+				g1.getChildren().get(1).setTranslateX(Merkur.x + sun_RADIUS);
 				g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(1).setTranslateZ(Merkur.z);
-//
-//				Venus.x = (int) (um_Venus_RADIUSa * Math.sin(Venusangle)) + sun.x;
-//				Venus.z = (int) (um_Venus_RADIUSb * Math.cos(Venusangle)) + sun.z;
-//				g1.getChildren().get(2).setTranslateX(Venus.x);
-//				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
-//				g1.getChildren().get(2).setTranslateZ(Venus.z);
-				
-				earth.x = (int) ((um_earth_RADIUSa+sun_RADIUS) * Math.sin(Earthangle)) + sun.x;
-				earth.z = (int) ((um_earth_RADIUSb+sun_RADIUS) * Math.cos(Earthangle)) + sun.z;
-				g1.getChildren().get(2).setTranslateX(earth.x);
-				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(2).setTranslateZ(earth.z);
 
-				moon.x = (int) (Math.sin(Moonangle) * (earth_RADIUS *2) + (earth.x));
-				moon.z = (int) (Math.cos(Moonangle) * (earth_RADIUS *2) + (earth.z));
-				g1.getChildren().get(3).setTranslateX(moon.x + earth_RADIUS / 2);
+				Venus.x = (um_Venus_RADIUSa + sun_RADIUS) * Math.sin(Venusangle) + sun.x;
+				Venus.z = (um_Venus_RADIUSb + sun_RADIUS) * Math.cos(Venusangle) + sun.z;
+				g1.getChildren().get(2).setTranslateX(Venus.x + sun_RADIUS);
+				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
+				g1.getChildren().get(2).setTranslateZ(Venus.z);
+
+				earth.x = (um_earth_RADIUSa + sun_RADIUS) * Math.sin(Earthangle) + sun.x;
+				earth.z = (um_earth_RADIUSb + sun_RADIUS) * Math.cos(Earthangle) + sun.z;
+				g1.getChildren().get(3).setTranslateX(earth.x);
 				g1.getChildren().get(3).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(3).setTranslateZ(moon.z);
-				
-				Mars.x = (int) ((um_Mars_RADIUSa+sun_RADIUS) * Math.sin(Marsangle)) + sun.x;
-				Mars.z = (int) ((um_Mars_RADIUSb+sun_RADIUS) * Math.cos(Marsangle)) + sun.z;
-				g1.getChildren().get(4).setTranslateX(Mars.x);
+				g1.getChildren().get(3).setTranslateZ(earth.z);
+
+				moon.x = Math.sin(Moonangle) * (earth_RADIUS * 2) + (earth.x);
+				moon.z = Math.cos(Moonangle) * (earth_RADIUS * 2) + (earth.z);
+				g1.getChildren().get(4).setTranslateX(moon.x + earth_RADIUS / 2);
 				g1.getChildren().get(4).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(4).setTranslateZ(Mars.z);
-				
-				Jupiter.x = (int) ((um_Jupiter_RADIUSa+sun_RADIUS) * Math.sin(Jupiterangle)) + sun.x;
-				Jupiter.z = (int) ((um_Jupiter_RADIUSb+sun_RADIUS) * Math.cos(Jupiterangle)) + sun.z;
-				g1.getChildren().get(5).setTranslateX(Jupiter.x);
+				g1.getChildren().get(4).setTranslateZ(moon.z);
+
+				Mars.x = (um_Mars_RADIUSa + sun_RADIUS) * Math.sin(Marsangle) + sun.x;
+				Mars.z = (um_Mars_RADIUSb + sun_RADIUS) * Math.cos(Marsangle) + sun.z;
+				g1.getChildren().get(5).setTranslateX(Mars.x);
 				g1.getChildren().get(5).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(5).setTranslateZ(Jupiter.z);
-				
-				Saturn.x = (int) ((um_Saturn_RADIUSa+sun_RADIUS) * Math.sin(Saturnangle)) + sun.x;
-				Saturn.z = (int) ((um_Saturn_RADIUSb+sun_RADIUS) * Math.cos(Saturnangle)) + sun.z;
-				g1.getChildren().get(6).setTranslateX(Saturn.x);
+				g1.getChildren().get(5).setTranslateZ(Mars.z);
+
+				Jupiter.x = (um_Jupiter_RADIUSa + sun_RADIUS) * Math.sin(Jupiterangle) + sun.x;
+				Jupiter.z = (um_Jupiter_RADIUSb + sun_RADIUS) * Math.cos(Jupiterangle) + sun.z;
+				g1.getChildren().get(6).setTranslateX(Jupiter.x);
 				g1.getChildren().get(6).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(6).setTranslateZ(Saturn.z);
-				
-				Uranus.x = (int) ((um_Uranus_RADIUSa+sun_RADIUS) * Math.sin(Uranusangle)) + sun.x;
-				Uranus.z = (int) ((um_Uranus_RADIUSb+sun_RADIUS) * Math.cos(Uranusangle)) + sun.z;
-				g1.getChildren().get(7).setTranslateX(Uranus.x);
+				g1.getChildren().get(6).setTranslateZ(Jupiter.z);
+
+				Saturn.x = (um_Saturn_RADIUSa + sun_RADIUS) * Math.sin(Saturnangle) + sun.x;
+				Saturn.z = (um_Saturn_RADIUSb + sun_RADIUS) * Math.cos(Saturnangle) + sun.z;
+				g1.getChildren().get(7).setTranslateX(Saturn.x);
 				g1.getChildren().get(7).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(7).setTranslateZ(Uranus.z);
-				
-				Neptun.x = (int) ((um_Neptun_RADIUSa+sun_RADIUS) * Math.sin(Neptunangle)) + sun.x;
-				Neptun.z = (int) ((um_Neptun_RADIUSb+sun_RADIUS) * Math.cos(Neptunangle)) + sun.z;
-				g1.getChildren().get(8).setTranslateX(Neptun.x);
+				g1.getChildren().get(7).setTranslateZ(Saturn.z);
+
+				Uranus.x = (um_Uranus_RADIUSa + sun_RADIUS) * Math.sin(Uranusangle) + sun.x;
+				Uranus.z = (um_Uranus_RADIUSb + sun_RADIUS) * Math.cos(Uranusangle) + sun.z;
+				g1.getChildren().get(8).setTranslateX(Uranus.x);
 				g1.getChildren().get(8).setTranslateY(540 - sun_RADIUS);
-				g1.getChildren().get(8).setTranslateZ(Neptun.z);
-				
+				g1.getChildren().get(8).setTranslateZ(Uranus.z);
+
+				Neptun.x = (um_Neptun_RADIUSa + sun_RADIUS) * Math.sin(Neptunangle) + sun.x;
+				Neptun.z = (um_Neptun_RADIUSb + sun_RADIUS) * Math.cos(Neptunangle) + sun.z;
+				g1.getChildren().get(9).setTranslateX(Neptun.x);
+				g1.getChildren().get(9).setTranslateY(540 - sun_RADIUS);
+				g1.getChildren().get(9).setTranslateZ(Neptun.z);
 
 				Merkurangle += Merkurstep;
 				Merkurangle %= 360;
-//				Venusangle += Venusstep;
-//				Venusangle %= 360;
+				Venusangle += Venusstep;
+				Venusangle %= 360;
 				Earthangle += Earthstep;
 				Earthangle %= 360;
 				Moonangle += Moonstep;
@@ -378,27 +450,27 @@ public class SunSystemViewer extends Application {
 
 		rotateAroundYAxis(g1.getChildren().get(0), 10000000).play();
 		rotateAroundYAxis(g1.getChildren().get(1), MerkurROTATE_MSECS).play();
-//		rotateAroundYAxis(g1.getChildren().get(2), VenusROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(2), EarthROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(2), MoonROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(4), MarsROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(5), JupiterROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(6), SaturnROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(7), UranusROTATE_MSECS).play();
-        rotateAroundYAxis(g1.getChildren().get(8), NeptunROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(2), VenusROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(3), EarthROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(4), MoonROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(5), MarsROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(6), JupiterROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(7), SaturnROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(8), UranusROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(9), NeptunROTATE_MSECS).play();
 	}
 
 	private RotateTransition rotateAroundYAxis(Node node, double s) {
-        RotateTransition rotate = new RotateTransition(Duration.millis(s), node);
-        rotate.setAxis(Rotate.Y_AXIS);
-        rotate.setFromAngle(360);
-        rotate.setToAngle(0);
-        rotate.setInterpolator(Interpolator.LINEAR);
-        rotate.setCycleCount(RotateTransition.INDEFINITE);
+		RotateTransition rotate = new RotateTransition(Duration.seconds(s), node);
+		rotate.setAxis(Rotate.Y_AXIS);
+		rotate.setFromAngle(360);
+		rotate.setToAngle(0);
+		rotate.setInterpolator(Interpolator.LINEAR);
+		rotate.setCycleCount(RotateTransition.INDEFINITE);
 
-        return rotate;
-    }
-	
+		return rotate;
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
