@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -117,20 +116,20 @@ public class SunSystemViewer extends Application {
 	private static final String	Uranus_MAP			= "http://i.imgur.com/mrPhKTx.jpg";
 	private static final String	Neptun_MAP			= "http://i.imgur.com/gA0gayx.jpg";
 
-	Point3D						sun					= new Point3D();
-	Point3D						Merkur				= new Point3D();
-	Point3D						Venus				= new Point3D();
-	Point3D						earth				= new Point3D();
-	Point3D						moon				= new Point3D();
-	Point3D						Mars				= new Point3D();
-	Point3D						Jupiter				= new Point3D();
-	Point3D						Saturn				= new Point3D();
-	Point3D						Uranus				= new Point3D();
-	Point3D						Neptun				= new Point3D();
+	private Point3D				sun					= new Point3D();
+	private Point3D				Merkur				= new Point3D();
+	private Point3D				Venus				= new Point3D();
+	private Point3D				earth				= new Point3D();
+	private Point3D				moon				= new Point3D();
+	private Point3D				Mars				= new Point3D();
+	private Point3D				Jupiter				= new Point3D();
+	private Point3D				Saturn				= new Point3D();
+	private Point3D				Uranus				= new Point3D();
+	private Point3D				Neptun				= new Point3D();
 
-	int							x, y, z;
+	private int					x, y, z;
 	private Rotate				rotateX, rotateY, rotateZ;
-	private Translate			translateX;
+	private boolean				pause				= false;
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -296,6 +295,8 @@ public class SunSystemViewer extends Application {
 		stage.show();
 		stage.setFullScreen(false);
 
+		Timeline tl = new Timeline();
+
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent keyEvent) {
@@ -349,6 +350,13 @@ public class SunSystemViewer extends Application {
 						System.out.println(camera.getTranslateX());
 						camera.setTranslateZ(camera.getTranslateZ() - 100);
 						break;
+					case NUMPAD0:
+						if (tl.getStatus() == Animation.Status.RUNNING) {
+							tl.pause();
+						} else {
+							tl.play();
+						}
+						break;
 					case R:
 						camera.setTranslateX(960 - sun_RADIUS);
 						camera.setTranslateY(-16000);
@@ -365,7 +373,6 @@ public class SunSystemViewer extends Application {
 			}
 		});
 
-		Timeline tl = new Timeline();
 		tl.setCycleCount(Animation.INDEFINITE);
 		KeyFrame moveEarth = new KeyFrame(Duration.seconds(.0200), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
