@@ -76,11 +76,11 @@ public class SunSystemViewer extends Application {
 	private static final double	VIEWPORT_SIZEY		= 540;
 
 	private static final double	sunROTATE_SECS		= 10;
-	private static final double	MerkurROTATE_SECS	= 0.009291249;
-	private static final double	VenusROTATE_SECS	= 0.002357957;
-	private static final double	EarthROTATE_SECS	= 0.0608021041;
+	private static final double	MerkurROTATE_SECS	= 2.009291249;
+	private static final double	VenusROTATE_SECS	= 2.002357957;
+	private static final double	EarthROTATE_SECS	= 2.0008021041;
 	private static final double	MoonROTATE_SECS		= 3;
-	private static final double	MarsROTATE_SECS		= 0.598634604;
+	private static final double	MarsROTATE_SECS		= 2.598634604;
 	private static final double	JupiterROTATE_SECS	= 2.609798749;
 	private static final double	SaturnROTATE_SECS	= 2.172901589;
 	private static final double	UranusROTATE_SECS	= 2.609798749;
@@ -305,64 +305,50 @@ public class SunSystemViewer extends Application {
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(1, Rotate.Z_AXIS));
 						stack.push(new Map("z", (byte) 1));
 						break;
-
 					case D:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(-1, Rotate.Z_AXIS));
 						stack.push(new Map("z", (byte) (-1)));
 						break;
-
 					case W:
 						camera.getTransforms().addAll(rotateX = new Rotate(1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						stack.push(new Map("x", (byte) 1));
 						break;
-
 					case S:
 						camera.getTransforms().addAll(rotateX = new Rotate(-1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						stack.push(new Map("x", (byte) (-1)));
 						break;
-
 					case Q:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						stack.push(new Map("y", (byte) 1));
 						break;
-
 					case E:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(-1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						stack.push(new Map("y", (byte) (-1)));
 						break;
-
-					case NUMPAD8:
+					case I:
 						camera.setTranslateY(camera.getTranslateY() + 100);
 						break;
-
-					case NUMPAD2:
+					case K:
 						camera.setTranslateY(camera.getTranslateY() - 100);
 						break;
-
-					case NUMPAD4:
+					case J:
 						camera.setTranslateX(camera.getTranslateX() - 100);
 						break;
-
-					case NUMPAD6:
+					case L:
 						camera.setTranslateX(camera.getTranslateX() + 100);
 						break;
-
-					case NUMPAD9:
+					case U:
 						camera.setTranslateZ(camera.getTranslateZ() + 100);
 						break;
-
-					case NUMPAD1:
+					case O:
 						camera.setTranslateZ(camera.getTranslateZ() - 100);
 						break;
-
-					case NUMPAD0:
-						if (tl.getStatus() == Animation.Status.RUNNING) {
+					case P:
+						if (tl.getStatus() == Animation.Status.RUNNING)
 							tl.pause();
-						} else {
+						else
 							tl.play();
-						}
 						break;
-
 					case DIGIT1:
 						if (g1.getChildren().get(1).getOpacity() == 1)
 							g1.getChildren().get(1).setOpacity(0);
@@ -456,7 +442,6 @@ public class SunSystemViewer extends Application {
 							}
 						}
 						break;
-
 					default:
 						System.out.println("Sie haben den useless Knopf " + keyEvent.getCode() + " gedrückt!");
 						break;
