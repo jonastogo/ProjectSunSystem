@@ -35,17 +35,17 @@ public class SunSystemViewer extends Application {
 	private static final double	Neptun_RADIUS		= 240;
 
 	private static final double	um_Merkur_RADIUSa	= 400;
-	private static final double	um_Merkur_RADIUSb	= 275;
-	private static final double	um_Venus_RADIUSa	= 500;
-	private static final double	um_Venus_RADIUSb	= 250;
-	private static final double	um_earth_RADIUSa	= 1200;
-	private static final double	um_earth_RADIUSb	= 857;
-	private static final double	um_Mars_RADIUSa		= 1800;
-	private static final double	um_Mars_RADIUSb		= 1285;
+	private static final double	um_Merkur_RADIUSb	= 285;
+	private static final double	um_Venus_RADIUSa	= 700;
+	private static final double	um_Venus_RADIUSb	= 500;
+	private static final double	um_earth_RADIUSa	= 1700;
+	private static final double	um_earth_RADIUSb	= 1214;
+	private static final double	um_Mars_RADIUSa		= 2500;
+	private static final double	um_Mars_RADIUSb		= 1785;
 	private static final double	um_Jupiter_RADIUSa	= 4000;
-	private static final double	um_Jupiter_RADIUSb	= 2856;
+	private static final double	um_Jupiter_RADIUSb	= 2857;
 	private static final double	um_Saturn_RADIUSa	= 6500;
-	private static final double	um_Saturn_RADIUSb	= 4650;
+	private static final double	um_Saturn_RADIUSb	= 4642;
 	private static final double	um_Uranus_RADIUSa	= 7500;
 	private static final double	um_Uranus_RADIUSb	= 5357;
 	private static final double	um_Neptun_RADIUSa	= 8900;
@@ -74,16 +74,16 @@ public class SunSystemViewer extends Application {
 	private static final double	VIEWPORT_SIZEX		= 960;
 	private static final double	VIEWPORT_SIZEY		= 540;
 
-	private static final double	sunROTATE_MSECS		= 30;
-	private static final double	MerkurROTATE_MSECS	= 0.009291249;
-	private static final double	VenusROTATE_MSECS	= 0.002357957;
-	private static final double	EarthROTATE_MSECS	= 0.0608021041;
-	private static final double	MoonROTATE_MSECS	= 3;
-	private static final double	MarsROTATE_MSECS	= 0.598634604;
-	private static final double	JupiterROTATE_MSECS	= 2.609798749;
-	private static final double	SaturnROTATE_MSECS	= 2.172901589;
-	private static final double	UranusROTATE_MSECS	= 2.609798749;
-	private static final double	NeptunROTATE_MSECS	= 2.609798749;
+	private static final double	sunROTATE_SECS		= 10;
+	private static final double	MerkurROTATE_SECS	= 0.009291249;
+	private static final double	VenusROTATE_SECS	= 0.002357957;
+	private static final double	EarthROTATE_SECS	= 0.0608021041;
+	private static final double	MoonROTATE_SECS		= 3;
+	private static final double	MarsROTATE_SECS		= 0.598634604;
+	private static final double	JupiterROTATE_SECS	= 2.609798749;
+	private static final double	SaturnROTATE_SECS	= 2.172901589;
+	private static final double	UranusROTATE_SECS	= 2.609798749;
+	private static final double	NeptunROTATE_SECS	= 2.609798749;
 
 	private static final double	sunMAP_WIDTH		= 3000 / 2d;
 	private static final double	sunMAP_HEIGHT		= 1500 / 2d;
@@ -103,19 +103,19 @@ public class SunSystemViewer extends Application {
 	private static final double	SaturnMAP_HEIGHT	= 900 / 2d;
 	private static final double	UranusMAP_WIDTH		= 4000 / 2d;
 	private static final double	UranusMAP_HEIGHT	= 2000 / 2d;
-	private static final double	NeptunMAP_WIDTH		= 720 / 2d;
-	private static final double	NeptunMAP_HEIGHT	= 360 / 2d;
+	private static final double	NeptunMAP_WIDTH		= 4000 / 2d;
+	private static final double	NeptunMAP_HEIGHT	= 2000 / 2d;
 
-	private static final String	SUN_MAP				= "http://www.nasa.gov/images/content/700328main_20121014_003615_flat.jpg";
-	private static final String	Merkur_MAP			= "http://www.pur3d.de/images/design_pur3d/upload/space33.jpg";
-	private static final String	Venus_MAP			= "http://laps.noaa.gov/albers/sos/venus/venus4/venus4_rgb_cyl_www.jpg";
-	private static final String	EARTH_MAP			= "http://naturalearth.springercarto.com/ne3_data/8192/textures/1_earth_8k.jpg";
-	private static final String	MOON_MAP			= "http://www.uni-weimar.de/architektur/dsmbfl/blog/alotta/user/home/img/000/000//452.jpg";
-	private static final String	Mars_MAP			= "http://sos.noaa.gov/ge/astronomy/mars/textures/m46_color_8k.jpg";
-	private static final String	Jupiter_MAP			= "http://laps.noaa.gov/albers/sos/jupiter/jupiter/jupiter_rgb_cyl_www.jpg";
-	private static final String	Saturn_MAP			= "http://webuser.hs-furtwangen.de/~kieferaa/grundstudium/Computergrafik/CG/planets/planets/tex/saturnmap.jpg";
-	private static final String	Uranus_MAP			= "http://orig03.deviantart.net/a155/f/2010/235/d/1/blue_gas_giant_texture_by_avmorgan.jpg";
-	private static final String	Neptun_MAP			= "http://csdrive.srru.ac.th/55122420111/texture/neptun.jpg";
+	private static final String	SUN_MAP				= "http://i.imgur.com/uUDu05S.jpg";
+	private static final String	Merkur_MAP			= "http://i.imgur.com/VI9tFf3.jpg";
+	private static final String	Venus_MAP			= "http://i.imgur.com/499ruBn.jpg";
+	private static final String	EARTH_MAP			= "http://i.imgur.com/K0egsBw.jpg";
+	private static final String	MOON_MAP			= "http://i.imgur.com/WgBAJEt.jpg";
+	private static final String	Mars_MAP			= "http://i.imgur.com/xAXOyWO.jpg";
+	private static final String	Jupiter_MAP			= "http://i.imgur.com/lrzry2n.jpg";
+	private static final String	Saturn_MAP			= "http://i.imgur.com/6aXtrX8.jpg";
+	private static final String	Uranus_MAP			= "http://i.imgur.com/mrPhKTx.jpg";
+	private static final String	Neptun_MAP			= "http://i.imgur.com/gA0gayx.jpg";
 
 	Point3D						sun					= new Point3D();
 	Point3D						Merkur				= new Point3D();
@@ -448,16 +448,16 @@ public class SunSystemViewer extends Application {
 		tl.getKeyFrames().add(moveEarth);
 		tl.play();
 
-		rotateAroundYAxis(g1.getChildren().get(0), 10000000).play();
-		rotateAroundYAxis(g1.getChildren().get(1), MerkurROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(2), VenusROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(3), EarthROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(4), MoonROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(5), MarsROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(6), JupiterROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(7), SaturnROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(8), UranusROTATE_MSECS).play();
-		rotateAroundYAxis(g1.getChildren().get(9), NeptunROTATE_MSECS).play();
+		rotateAroundYAxis(g1.getChildren().get(0), sunROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(1), MerkurROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(2), VenusROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(3), EarthROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(4), MoonROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(5), MarsROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(6), JupiterROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(7), SaturnROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(8), UranusROTATE_SECS).play();
+		rotateAroundYAxis(g1.getChildren().get(9), NeptunROTATE_SECS).play();
 	}
 
 	private RotateTransition rotateAroundYAxis(Node node, double s) {
