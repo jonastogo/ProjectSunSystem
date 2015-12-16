@@ -306,50 +306,62 @@ public class SunSystemViewer extends Application {
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(1, Rotate.Z_AXIS));
 						z += rotateZ.getAngle();
 						break;
+
 					case D:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(-1, Rotate.Z_AXIS));
 						z += rotateZ.getAngle();
 						break;
+
 					case W:
 						camera.getTransforms().addAll(rotateX = new Rotate(1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						x += rotateX.getAngle();
 						break;
+
 					case S:
 						camera.getTransforms().addAll(rotateX = new Rotate(-1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						x += rotateX.getAngle();
 						break;
+
 					case Q:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						y += rotateY.getAngle();
 						break;
+
 					case E:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(-1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						y += rotateY.getAngle();
 						break;
+
 					case NUMPAD8:
 						System.out.println("+100");
 						camera.setTranslateY(camera.getTranslateY() + 100);
 						break;
+
 					case NUMPAD2:
 						System.out.println("-100");
 						camera.setTranslateY(camera.getTranslateY() - 100);
 						break;
+
 					case NUMPAD4:
 						System.out.println(camera.getTranslateX());
 						camera.setTranslateX(camera.getTranslateX() + 100);
 						break;
+
 					case NUMPAD6:
 						System.out.println(camera.getTranslateX());
 						camera.setTranslateX(camera.getTranslateX() - 100);
 						break;
+
 					case NUMPAD9:
 						System.out.println(camera.getTranslateX());
 						camera.setTranslateZ(camera.getTranslateZ() + 100);
 						break;
+
 					case NUMPAD1:
 						System.out.println(camera.getTranslateX());
 						camera.setTranslateZ(camera.getTranslateZ() - 100);
 						break;
+
 					case NUMPAD0:
 						if (tl.getStatus() == Animation.Status.RUNNING) {
 							tl.pause();
@@ -357,6 +369,7 @@ public class SunSystemViewer extends Application {
 							tl.play();
 						}
 						break;
+
 					case R:
 						camera.setTranslateX(960 - sun_RADIUS);
 						camera.setTranslateY(-16000);
@@ -366,6 +379,7 @@ public class SunSystemViewer extends Application {
 						y = 0;
 						z = 0;
 						break;
+
 					default:
 						System.out.println("klappt nicht");
 						break;
