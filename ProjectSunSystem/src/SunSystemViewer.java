@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -127,9 +129,8 @@ public class SunSystemViewer extends Application {
 	private Point3D				Uranus				= new Point3D();
 	private Point3D				Neptun				= new Point3D();
 
-	private int					x, y, z;
 	private Rotate				rotateX, rotateY, rotateZ;
-	private boolean				pause				= false;
+	private Stack<Map>			stack				= new Stack<Map>();
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -279,7 +280,6 @@ public class SunSystemViewer extends Application {
 
 		g1.getChildren().get(0).setTranslateX(960 - sun_RADIUS);
 		g1.getChildren().get(0).setTranslateY(540 - sun_RADIUS);
-
 		Scene scene = new Scene(g1, VIEWPORT_SIZEX, VIEWPORT_SIZEY, true, SceneAntialiasing.BALANCED);
 		scene.setFill(Color.rgb(0, 0, 0));
 
@@ -303,32 +303,32 @@ public class SunSystemViewer extends Application {
 				switch (keyEvent.getCode()) {
 					case A:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(1, Rotate.Z_AXIS));
-						z += rotateZ.getAngle();
+						stack.push(new Map("z", (byte) 1));
 						break;
 
 					case D:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(-1, Rotate.Z_AXIS));
-						z += rotateZ.getAngle();
+						stack.push(new Map("z", (byte) (-1)));
 						break;
 
 					case W:
 						camera.getTransforms().addAll(rotateX = new Rotate(1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
-						x += rotateX.getAngle();
+						stack.push(new Map("x", (byte) 1));
 						break;
 
 					case S:
 						camera.getTransforms().addAll(rotateX = new Rotate(-1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
-						x += rotateX.getAngle();
+						stack.push(new Map("x", (byte) (-1)));
 						break;
 
 					case Q:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
-						y += rotateY.getAngle();
+						stack.push(new Map("y", (byte) 1));
 						break;
 
 					case E:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(-1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
-						y += rotateY.getAngle();
+						stack.push(new Map("y", (byte) (-1)));
 						break;
 
 					case NUMPAD8:
@@ -340,11 +340,11 @@ public class SunSystemViewer extends Application {
 						break;
 
 					case NUMPAD4:
-						camera.setTranslateX(camera.getTranslateX() + 100);
+						camera.setTranslateX(camera.getTranslateX() - 100);
 						break;
 
 					case NUMPAD6:
-						camera.setTranslateX(camera.getTranslateX() - 100);
+						camera.setTranslateX(camera.getTranslateX() + 100);
 						break;
 
 					case NUMPAD9:
@@ -363,18 +363,102 @@ public class SunSystemViewer extends Application {
 						}
 						break;
 
+					case DIGIT1:
+						if (g1.getChildren().get(1).getOpacity() == 1)
+							g1.getChildren().get(1).setOpacity(0);
+						else
+							g1.getChildren().get(1).setOpacity(1);
+						break;
+					case DIGIT2:
+						if (g1.getChildren().get(2).getOpacity() == 1)
+							g1.getChildren().get(2).setOpacity(0);
+						else
+							g1.getChildren().get(2).setOpacity(1);
+						break;
+					case DIGIT3:
+						if (g1.getChildren().get(3).getOpacity() == 1)
+							g1.getChildren().get(3).setOpacity(0);
+						else
+							g1.getChildren().get(3).setOpacity(1);
+						break;
+					case DIGIT4:
+						if (g1.getChildren().get(4).getOpacity() == 1)
+							g1.getChildren().get(4).setOpacity(0);
+						else
+							g1.getChildren().get(4).setOpacity(1);
+						break;
+					case DIGIT5:
+						if (g1.getChildren().get(5).getOpacity() == 1)
+							g1.getChildren().get(5).setOpacity(0);
+						else
+							g1.getChildren().get(5).setOpacity(1);
+						break;
+					case DIGIT6:
+						if (g1.getChildren().get(6).getOpacity() == 1)
+							g1.getChildren().get(6).setOpacity(0);
+						else
+							g1.getChildren().get(6).setOpacity(1);
+						break;
+					case DIGIT7:
+						if (g1.getChildren().get(7).getOpacity() == 1)
+							g1.getChildren().get(7).setOpacity(0);
+						else
+							g1.getChildren().get(7).setOpacity(1);
+						break;
+					case DIGIT8:
+						if (g1.getChildren().get(8).getOpacity() == 1)
+							g1.getChildren().get(8).setOpacity(0);
+						else
+							g1.getChildren().get(8).setOpacity(1);
+						break;
+					case DIGIT9:
+						if (g1.getChildren().get(9).getOpacity() == 1)
+							g1.getChildren().get(9).setOpacity(0);
+						else
+							g1.getChildren().get(9).setOpacity(1);
+						break;
+					case DIGIT0:
+						if (g1.getChildren().get(0).getOpacity() == 1)
+							g1.getChildren().get(0).setOpacity(0);
+						else
+							g1.getChildren().get(0).setOpacity(1);
+						break;
+					case F11:
+						if (!stage.isFullScreen())
+							stage.setFullScreen(true);
+						else
+							stage.setFullScreen(false);
+						break;
+					case ESCAPE:
+						System.exit(1);
+						break;
 					case R:
 						camera.setTranslateX(960 - sun_RADIUS);
 						camera.setTranslateY(-16000);
 						camera.setTranslateZ(0);
-						camera.getTransforms().addAll(rotateX = new Rotate((x * (-1)), Rotate.X_AXIS), rotateY = new Rotate((y * (-1)), Rotate.Y_AXIS), rotateZ = new Rotate((z * (-1)), Rotate.Z_AXIS));
-						x = 0;
-						y = 0;
-						z = 0;
+						while (!stack.empty()) {
+							switch (stack.peek().getAxis()) {
+								case "x":
+									Map x = stack.pop();
+									camera.getTransforms().addAll(rotateX = new Rotate((x.getValue() * (-1)), Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+									break;
+								case "y":
+									Map y = stack.pop();
+									camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate((y.getValue() * (-1)), Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+									break;
+								case "z":
+									Map z = stack.pop();
+									camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate((z.getValue() * (-1)), Rotate.Z_AXIS));
+									break;
+								default:
+									System.out.println("keine gültige Map!");
+									break;
+							}
+						}
 						break;
 
 					default:
-						System.out.println("klappt nicht");
+						System.out.println("Sie haben den useless Knopf " + keyEvent.getCode() + " gedrückt!");
 						break;
 				}
 			}
@@ -386,55 +470,55 @@ public class SunSystemViewer extends Application {
 
 				Merkur.x = (um_Merkur_RADIUSa + sun_RADIUS) * Math.sin(Merkurangle) + sun.x;
 				Merkur.z = (um_Merkur_RADIUSb + sun_RADIUS) * Math.cos(Merkurangle) + sun.z;
-				g1.getChildren().get(1).setTranslateX(Merkur.x + sun_RADIUS);
+				g1.getChildren().get(1).setTranslateX(Merkur.x + sun_RADIUS - Merkur_RADIUS);
 				g1.getChildren().get(1).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(1).setTranslateZ(Merkur.z);
 
 				Venus.x = (um_Venus_RADIUSa + sun_RADIUS) * Math.sin(Venusangle) + sun.x;
 				Venus.z = (um_Venus_RADIUSb + sun_RADIUS) * Math.cos(Venusangle) + sun.z;
-				g1.getChildren().get(2).setTranslateX(Venus.x + sun_RADIUS);
+				g1.getChildren().get(2).setTranslateX(Venus.x + sun_RADIUS - Venus_RADIUS);
 				g1.getChildren().get(2).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(2).setTranslateZ(Venus.z);
 
 				earth.x = (um_earth_RADIUSa + sun_RADIUS) * Math.sin(Earthangle) + sun.x;
 				earth.z = (um_earth_RADIUSb + sun_RADIUS) * Math.cos(Earthangle) + sun.z;
-				g1.getChildren().get(3).setTranslateX(earth.x);
+				g1.getChildren().get(3).setTranslateX(earth.x + sun_RADIUS - earth_RADIUS);
 				g1.getChildren().get(3).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(3).setTranslateZ(earth.z);
 
 				moon.x = Math.sin(Moonangle) * (earth_RADIUS * 2) + (earth.x);
 				moon.z = Math.cos(Moonangle) * (earth_RADIUS * 2) + (earth.z);
-				g1.getChildren().get(4).setTranslateX(moon.x + earth_RADIUS / 2);
+				g1.getChildren().get(4).setTranslateX(moon.x + sun_RADIUS);
 				g1.getChildren().get(4).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(4).setTranslateZ(moon.z);
 
 				Mars.x = (um_Mars_RADIUSa + sun_RADIUS) * Math.sin(Marsangle) + sun.x;
 				Mars.z = (um_Mars_RADIUSb + sun_RADIUS) * Math.cos(Marsangle) + sun.z;
-				g1.getChildren().get(5).setTranslateX(Mars.x);
+				g1.getChildren().get(5).setTranslateX(Mars.x + sun_RADIUS - Mars_RADIUS);
 				g1.getChildren().get(5).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(5).setTranslateZ(Mars.z);
 
 				Jupiter.x = (um_Jupiter_RADIUSa + sun_RADIUS) * Math.sin(Jupiterangle) + sun.x;
 				Jupiter.z = (um_Jupiter_RADIUSb + sun_RADIUS) * Math.cos(Jupiterangle) + sun.z;
-				g1.getChildren().get(6).setTranslateX(Jupiter.x);
+				g1.getChildren().get(6).setTranslateX(Jupiter.x + sun_RADIUS + Jupiter_RADIUS);
 				g1.getChildren().get(6).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(6).setTranslateZ(Jupiter.z);
 
 				Saturn.x = (um_Saturn_RADIUSa + sun_RADIUS) * Math.sin(Saturnangle) + sun.x;
 				Saturn.z = (um_Saturn_RADIUSb + sun_RADIUS) * Math.cos(Saturnangle) + sun.z;
-				g1.getChildren().get(7).setTranslateX(Saturn.x);
+				g1.getChildren().get(7).setTranslateX(Saturn.x + sun_RADIUS - Saturn_RADIUS);
 				g1.getChildren().get(7).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(7).setTranslateZ(Saturn.z);
 
 				Uranus.x = (um_Uranus_RADIUSa + sun_RADIUS) * Math.sin(Uranusangle) + sun.x;
 				Uranus.z = (um_Uranus_RADIUSb + sun_RADIUS) * Math.cos(Uranusangle) + sun.z;
-				g1.getChildren().get(8).setTranslateX(Uranus.x);
+				g1.getChildren().get(8).setTranslateX(Uranus.x + sun_RADIUS - Uranus_RADIUS);
 				g1.getChildren().get(8).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(8).setTranslateZ(Uranus.z);
 
 				Neptun.x = (um_Neptun_RADIUSa + sun_RADIUS) * Math.sin(Neptunangle) + sun.x;
 				Neptun.z = (um_Neptun_RADIUSb + sun_RADIUS) * Math.cos(Neptunangle) + sun.z;
-				g1.getChildren().get(9).setTranslateX(Neptun.x);
+				g1.getChildren().get(9).setTranslateX(Neptun.x + sun_RADIUS - Neptun_RADIUS);
 				g1.getChildren().get(9).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(9).setTranslateZ(Neptun.z);
 
