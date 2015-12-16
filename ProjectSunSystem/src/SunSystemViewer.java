@@ -293,7 +293,7 @@ public class SunSystemViewer extends Application {
 		scene.setCamera(camera);
 		stage.setScene(scene);
 		stage.show();
-		stage.setFullScreen(false);
+		stage.setFullScreen(true);
 
 		Timeline tl = new Timeline();
 
@@ -438,24 +438,24 @@ public class SunSystemViewer extends Application {
 				g1.getChildren().get(9).setTranslateY(540 - sun_RADIUS);
 				g1.getChildren().get(9).setTranslateZ(Neptun.z);
 
-				Merkurangle += Merkurstep;
-				Merkurangle %= 360;
-				Venusangle += Venusstep;
-				Venusangle %= 360;
-				Earthangle += Earthstep;
-				Earthangle %= 360;
-				Moonangle += Moonstep;
-				Moonangle %= 360;
-				Marsangle += Marsstep;
-				Marsangle %= 360;
-				Jupiterangle += Jupiterstep;
-				Jupiterangle %= 360;
-				Saturnangle += Saturnstep;
-				Saturnangle %= 360;
-				Uranusangle += Uranusstep;
-				Uranusangle %= 360;
-				Neptunangle += Neptunstep;
-				Neptunangle %= 360;
+				Merkurangle -= Merkurstep;
+				Merkurangle %= -360;
+				Venusangle -= Venusstep;
+				Venusangle %= -360;
+				Earthangle -= Earthstep;
+				Earthangle %= -360;
+				Moonangle -= Moonstep;
+				Moonangle %= -360;
+				Marsangle -= Marsstep;
+				Marsangle %= -360;
+				Jupiterangle -= Jupiterstep;
+				Jupiterangle %= -360;
+				Saturnangle -= Saturnstep;
+				Saturnangle %= -360;
+				Uranusangle -= Uranusstep;
+				Uranusangle %= -360;
+				Neptunangle -= Neptunstep;
+				Neptunangle %= -360;
 			}
 		});
 
