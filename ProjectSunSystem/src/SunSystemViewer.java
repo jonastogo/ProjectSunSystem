@@ -47,8 +47,8 @@ public class SunSystemViewer extends Application {
 	private static final double	um_Saturn_RADIUSb	= 4642;
 	private static final double	um_Uranus_RADIUSa	= 7500;
 	private static final double	um_Uranus_RADIUSb	= 5357;
-	private static final double	um_Neptun_RADIUSa	= 8900;
-	private static final double	um_Neptun_RADIUSb	= 6357;
+	private static final double	um_Neptun_RADIUSa	= 10000;
+	private static final double	um_Neptun_RADIUSb	= 7142;
 
 	private static double		Merkurangle			= -180;
 	private static double		Venusangle			= 90;
@@ -300,7 +300,6 @@ public class SunSystemViewer extends Application {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent keyEvent) {
-				System.out.println(keyEvent.getCode());
 				switch (keyEvent.getCode()) {
 					case A:
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(1, Rotate.Z_AXIS));
@@ -333,32 +332,26 @@ public class SunSystemViewer extends Application {
 						break;
 
 					case NUMPAD8:
-						System.out.println("+100");
 						camera.setTranslateY(camera.getTranslateY() + 100);
 						break;
 
 					case NUMPAD2:
-						System.out.println("-100");
 						camera.setTranslateY(camera.getTranslateY() - 100);
 						break;
 
 					case NUMPAD4:
-						System.out.println(camera.getTranslateX());
 						camera.setTranslateX(camera.getTranslateX() + 100);
 						break;
 
 					case NUMPAD6:
-						System.out.println(camera.getTranslateX());
 						camera.setTranslateX(camera.getTranslateX() - 100);
 						break;
 
 					case NUMPAD9:
-						System.out.println(camera.getTranslateX());
 						camera.setTranslateZ(camera.getTranslateZ() + 100);
 						break;
 
 					case NUMPAD1:
-						System.out.println(camera.getTranslateX());
 						camera.setTranslateZ(camera.getTranslateZ() - 100);
 						break;
 
