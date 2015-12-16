@@ -29,7 +29,7 @@ public class SunSystemViewer extends Application {
 	private static final double	Venus_RADIUS		= 60;
 	private static final double	earth_RADIUS		= 100;
 	private static final double	moon_RADIUS			= 10;
-	private static final double	Mars_RADIUS			= 33;
+	private static final double	Mars_RADIUS			= 55;
 	private static final double	Jupiter_RADIUS		= 400;
 	private static final double	Saturn_RADIUS		= 300;
 	private static final double	Uranus_RADIUS		= 250;
