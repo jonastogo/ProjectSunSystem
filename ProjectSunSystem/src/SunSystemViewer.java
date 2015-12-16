@@ -325,24 +325,31 @@ public class SunSystemViewer extends Application {
 						camera.getTransforms().addAll(rotateX = new Rotate(0, Rotate.X_AXIS), rotateY = new Rotate(-1, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
 						stack.push(new Map("y", (byte) (-1)));
 						break;
+					case NUMPAD8:
 					case I:
 						camera.setTranslateY(camera.getTranslateY() + 100);
 						break;
+					case NUMPAD2:
 					case K:
 						camera.setTranslateY(camera.getTranslateY() - 100);
 						break;
+					case NUMPAD4:
 					case J:
 						camera.setTranslateX(camera.getTranslateX() - 100);
 						break;
+					case NUMPAD6:
 					case L:
 						camera.setTranslateX(camera.getTranslateX() + 100);
 						break;
+					case NUMPAD9:
 					case U:
 						camera.setTranslateZ(camera.getTranslateZ() + 100);
 						break;
+					case NUMPAD1:
 					case O:
 						camera.setTranslateZ(camera.getTranslateZ() - 100);
 						break;
+					case NUMPAD0:
 					case P:
 						if (tl.getStatus() == Animation.Status.RUNNING)
 							tl.pause();
