@@ -131,6 +131,7 @@ public class SunSystemViewer extends Application {
 
 	private Rotate				rotateX, rotateY, rotateZ;
 	private Stack<Map>			stack				= new Stack<Map>();
+	private int					x, y, z;
 
 	private Sphere buildSunScene() {
 		Sphere sun = new Sphere(sun_RADIUS);
@@ -425,7 +426,17 @@ public class SunSystemViewer extends Application {
 					case ESCAPE:
 						System.exit(1);
 						break;
+					case C:
+						camera.setTranslateX(360.0);
+						camera.setTranslateY(-8200.0);
+						camera.setTranslateZ(-22600.0);
+						for (int i = 0; i < 290; i++) {
+							camera.getTransforms().addAll(rotateX = new Rotate(-1, Rotate.X_AXIS), rotateY = new Rotate(0, Rotate.Y_AXIS), rotateZ = new Rotate(0, Rotate.Z_AXIS));
+							stack.push(new Map("x", (byte) (-1)));
+						}
+						break;
 					case R:
+						System.out.println(camera.getTranslateX() + " / " + camera.getTranslateY() + " / " + camera.getTranslateZ());
 						camera.setTranslateX(960 - sun_RADIUS);
 						camera.setTranslateY(-16000);
 						camera.setTranslateZ(0);
