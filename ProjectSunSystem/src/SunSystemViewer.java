@@ -43,7 +43,7 @@ public class SunSystemViewer extends Application {
 	private static final double	um_earth_RADIUSb	= 1214;
 	private static final double	um_Mars_RADIUSa		= 2500;
 	private static final double	um_Mars_RADIUSb		= 1785;
-	private static final double	um_Jupiter_RADIUSa	= 4000;
+	private static final double	um_Jupiter_RADIUSa	= 4000;// comntar
 	private static final double	um_Jupiter_RADIUSb	= 2857;
 	private static final double	um_Saturn_RADIUSa	= 6500;
 	private static final double	um_Saturn_RADIUSb	= 4642;
